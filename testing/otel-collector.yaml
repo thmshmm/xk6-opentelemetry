@@ -1,0 +1,25 @@
+receivers:
+  kafka:
+    brokers:
+      - broker:29092
+    group_id: collector-logs
+    topic: otel_logs
+
+exporters:
+  logging:
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    logs:
+      receivers:
+        - kafka
+      processors:
+        - batch
+      exporters:
+        - logging
+  telemetry:
+    logs:
+      level: "debug"

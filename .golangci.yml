@@ -1,0 +1,27 @@
+linters:
+  enable-all: true
+  disable:
+    - exhaustruct
+    - nosnakecase
+    - maligned # deprecated
+    - golint # deprecated
+    - ifshort # deprecated
+    - structcheck # deprecated
+    - varcheck # deprecated
+    - exhaustivestruct # deprecated
+    - interfacer # deprecated
+    - scopelint # deprecated
+    - deadcode # deprecated
+    - rowserrcheck # generics
+    - structcheck # generics
+    - wastedassign # generics
+
+issues:
+  exclude-rules:
+    - path: module\.go
+      linters:
+        - gochecknoinits
+        - ireturn
+    - text: "G404:"
+      linters:
+        - gosec

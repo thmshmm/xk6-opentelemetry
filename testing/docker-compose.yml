@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  redpanda:
+    image: vectorized/redpanda:v23.1.1
+    command: redpanda start --overprovisioned --smp 1 --memory 1G --reserve-memory 0M --node-id 0 --check=false --kafka-addr INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092 --advertise-kafka-addr INSIDE://broker:29092,OUTSIDE://localhost:9092
+    container_name: broker
+    ports:
+      - "9092:9092"
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.72.0
+    command:
+      - --config
+      - /etc/otel/config.yaml
+    volumes:
+      - ./otel-collector.yaml/:/etc/otel/config.yaml
+    restart: always
