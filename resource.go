@@ -6,16 +6,7 @@ import (
 )
 
 func (g *Generator) SetStaticResourceAttributes(attrs map[string]interface{}) {
-	attributes := make([]*commonpb.KeyValue, 0)
-
-	for k, v := range attrs {
-		attributes = append(attributes, &commonpb.KeyValue{
-			Key:   k,
-			Value: ToAnyValue(v),
-		})
-	}
-
-	g.staticResourceAttributes = attributes
+	g.staticResourceAttributes = ToAttributes(attrs)
 }
 
 func (g *Generator) resource() *resourcepb.Resource {

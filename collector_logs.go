@@ -8,15 +8,15 @@ import (
 )
 
 func (g *Generator) ExportLogsServiceRequest(bodyWordCount int) []byte {
-	exportLogsServiceRequest := collogspb.ExportLogsServiceRequest{
+	request := collogspb.ExportLogsServiceRequest{
 		ResourceLogs: []*logspb.ResourceLogs{
 			g.resourceLogs(bodyWordCount),
 		},
 	}
 
-	data, err := proto.Marshal(&exportLogsServiceRequest)
+	data, err := proto.Marshal(&request)
 	if err != nil {
-		logrus.Error("Failed to marshal ExportLogsServiceRequest: %w", err)
+		logrus.Errorf("Failed to marshal ExportLogsServiceRequest: %v", err)
 
 		return nil
 	}

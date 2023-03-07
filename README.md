@@ -4,6 +4,13 @@ The xk6-opentelemetry project is a [k6 extension](https://k6.io/docs/extensions/
 
 Check the [scripts](./scripts/) directory for examples.
 
+## Features
+
+- Generate ExportLogsServiceRequest
+- Generate ExportMetricsServiceRequest
+    - Types: gauge
+- Set static resource attributes
+
 ## Development
 
 As the testing environment and scripts rely on sending messages to Kafka, the extension [xk6-kafka](https://github.com/mostafa/xk6-kafka) needs to be integrated as well when creating the k6 binary.

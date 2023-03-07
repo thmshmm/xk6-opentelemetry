@@ -6,6 +6,19 @@ import (
 
 const unsupportedTypeValue = "unsupported_type"
 
+func ToAttributes(attrs map[string]interface{}) []*commonpb.KeyValue {
+	attributes := make([]*commonpb.KeyValue, 0)
+
+	for k, v := range attrs {
+		attributes = append(attributes, &commonpb.KeyValue{
+			Key:   k,
+			Value: ToAnyValue(v),
+		})
+	}
+
+	return attributes
+}
+
 func ToAnyValue(attr interface{}) *commonpb.AnyValue {
 	var value *commonpb.AnyValue
 
