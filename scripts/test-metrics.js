@@ -34,14 +34,34 @@ export default function () {
     // optionally set static attributes for the resource
     generator.setStaticResourceAttributes(resourceAttributes)
 
-    for (let idx = 0; idx < 10; idx++) {
+    for (let idx = 0; idx < 5; idx++) {
         messages[idx] = {
             value: schemaRegistry.serialize({
                 data: Array.from(generator.exportMetricsServiceRequest({
                     "type": "gauge",
-                    "name": randomItem(metricNames),
+                    "name": "gauge_" + randomItem(metricNames),
                     "attributes": metricAttributes,
-                    "value": randomIntBetween(10, 100),
+                    "data": {
+                        "value": randomIntBetween(10, 100)
+                    },
+                })),
+                schemaType: SCHEMA_TYPE_BYTES,
+            })
+        }
+    }
+
+    for (let idx = 0; idx < 5; idx++) {
+        messages[idx] = {
+            value: schemaRegistry.serialize({
+                data: Array.from(generator.exportMetricsServiceRequest({
+                    "type": "sum",
+                    "name": "sum_" + randomItem(metricNames),
+                    "attributes": metricAttributes,
+                    "data": {
+                        "value": randomIntBetween(10, 100),
+                        "isMonotonic": false, // true or false
+                        "aggregationTemporality": "delta" // delta or cumulative
+                    },
                 })),
                 schemaType: SCHEMA_TYPE_BYTES,
             })
