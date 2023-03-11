@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	v1 "go.opentelemetry.io/proto/otlp/common/v1"
+	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
 	metricspb "go.opentelemetry.io/proto/otlp/metrics/v1"
 )
 
@@ -18,7 +18,7 @@ type MetricConfig struct {
 	Data       map[string]interface{} `json:"data"`
 }
 
-func (g *Generator) resourceMetrics(config MetricConfig) *metricspb.ResourceMetrics {
+func ResourceMetrics(resourceAttrs []*commonpb.KeyValue, config MetricConfig) *metricspb.ResourceMetrics {
 	metric := &metricspb.Metric{
 		Name: config.Name,
 	}
@@ -34,7 +34,7 @@ func (g *Generator) resourceMetrics(config MetricConfig) *metricspb.ResourceMetr
 			return nil
 		}
 
-		metric.Data = g.gauge(attrs, data)
+		metric.Data = gauge(attrs, data)
 	case "sum":
 		data, err := parseSumData(config.Data)
 		if err != nil {
@@ -43,7 +43,7 @@ func (g *Generator) resourceMetrics(config MetricConfig) *metricspb.ResourceMetr
 			return nil
 		}
 
-		metric.Data = g.sum(attrs, data)
+		metric.Data = sum(attrs, data)
 	default:
 		logrus.Errorf("Unimplemented metric type %q, use one of [gauge, sum]", config.Type)
 
@@ -51,7 +51,7 @@ func (g *Generator) resourceMetrics(config MetricConfig) *metricspb.ResourceMetr
 	}
 
 	return &metricspb.ResourceMetrics{
-		Resource: g.resource(),
+		Resource: resource(resourceAttrs),
 		ScopeMetrics: []*metricspb.ScopeMetrics{
 			{
 				Metrics: []*metricspb.Metric{
@@ -82,7 +82,7 @@ func parseGaugeData(rawData map[string]interface{}) (*GaugeData, error) {
 	return &data, nil
 }
 
-func (g *Generator) gauge(attrs []*v1.KeyValue, data *GaugeData) *metricspb.Metric_Gauge {
+func gauge(attrs []*commonpb.KeyValue, data *GaugeData) *metricspb.Metric_Gauge {
 	return &metricspb.Metric_Gauge{
 		Gauge: &metricspb.Gauge{
 			DataPoints: []*metricspb.NumberDataPoint{
@@ -131,7 +131,7 @@ func getAggregationTemporality(temporality string) metricspb.AggregationTemporal
 	return metricspb.AggregationTemporality_AGGREGATION_TEMPORALITY_UNSPECIFIED
 }
 
-func (g *Generator) sum(attrs []*v1.KeyValue, data *SumData) *metricspb.Metric_Sum {
+func sum(attrs []*commonpb.KeyValue, data *SumData) *metricspb.Metric_Sum {
 	return &metricspb.Metric_Sum{
 		Sum: &metricspb.Sum{
 			IsMonotonic:            data.IsMonotonic,

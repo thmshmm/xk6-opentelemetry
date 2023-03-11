@@ -5,18 +5,8 @@ import (
 	resourcepb "go.opentelemetry.io/proto/otlp/resource/v1"
 )
 
-func (g *Generator) SetStaticResourceAttributes(attrs map[string]interface{}) {
-	g.staticResourceAttributes = ToAttributes(attrs)
-}
-
-func (g *Generator) resource() *resourcepb.Resource {
-	var attributes []*commonpb.KeyValue
-
-	if g.staticResourceAttributes != nil {
-		attributes = g.staticResourceAttributes
-	}
-
+func resource(attrs []*commonpb.KeyValue) *resourcepb.Resource {
 	return &resourcepb.Resource{
-		Attributes: attributes,
+		Attributes: attrs,
 	}
 }
