@@ -1,56 +1,44 @@
 package generator
 
 import (
-	"math/rand"
 	"time"
 
 	v1 "go.opentelemetry.io/proto/otlp/common/v1"
 	logspb "go.opentelemetry.io/proto/otlp/logs/v1"
 )
 
-const (
-	defaultMinBodyWordCount = 5
-	defaultMaxBodyWordCount = 10
-	maxSeverityNumber       = 24
-)
+type LogConfig struct {
+	Attributes map[string]interface{} `json:"attributes"`
+	Data       LogData                `json:"data"`
+}
 
-func (g *Generator) resourceLogs(bodyWordCount int) *logspb.ResourceLogs {
+type LogData struct {
+	Body     string `json:"body"`
+	Severity int32  `json:"severity"`
+}
+
+func (g *Generator) resourceLogs(config LogConfig) *logspb.ResourceLogs {
 	return &logspb.ResourceLogs{
 		Resource: g.resource(),
 		ScopeLogs: []*logspb.ScopeLogs{
 			{
 				LogRecords: []*logspb.LogRecord{
-					g.logRecord(bodyWordCount),
+					g.logRecord(ToAttributes(config.Attributes), config.Data),
 				},
 			},
 		},
 	}
 }
 
-func (g *Generator) logRecord(bodyWordCount int) *logspb.LogRecord {
+func (g *Generator) logRecord(attrs []*v1.KeyValue, data LogData) *logspb.LogRecord {
 	return &logspb.LogRecord{
+		Attributes:     attrs,
 		TimeUnixNano:   uint64(time.Now().UnixNano()),
-		SeverityNumber: g.logSeverityNumber(),
-		Body:           g.logBody(bodyWordCount),
-	}
-}
-
-func (g *Generator) logBody(wordCount int) *v1.AnyValue {
-	if wordCount == 0 {
-		wordCount = defaultMinBodyWordCount + rand.Intn(defaultMaxBodyWordCount-defaultMinBodyWordCount+1)
-	}
-
-	return &v1.AnyValue{
-		Value: &v1.AnyValue_StringValue{
-			StringValue: g.faker.Sentence(wordCount),
+		SeverityNumber: logspb.SeverityNumber(data.Severity),
+		Body: &v1.AnyValue{
+			Value: &v1.AnyValue_StringValue{
+				StringValue: data.Body,
+			},
 		},
 	}
-}
-
-// severityNumber returns a random severity number [1, 24].
-// See opentelemetry/proto/logs/v1/logs.proto for available severity numbers.
-func (g *Generator) logSeverityNumber() logspb.SeverityNumber {
-	randSeverityNumber := rand.Int31n(maxSeverityNumber) + 1
-
-	return logspb.SeverityNumber(randSeverityNumber)
 }

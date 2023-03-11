@@ -4,6 +4,10 @@ import {
     SchemaRegistry,
     SCHEMA_TYPE_BYTES,
 } from 'k6/x/kafka';
+import {
+    randomItem,
+    randomIntBetween,
+} from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
 
 const brokers = ["localhost:9092"]
 const topic = "otel_logs"
@@ -12,6 +16,11 @@ const producer = new Writer({
     brokers: brokers,
     topic: topic,
 });
+
+const logBodies = [
+    "this is a log msg",
+    "this is another log msg"
+]
 
 export default function () {
     var messages = []
@@ -28,9 +37,13 @@ export default function () {
     for (let idx = 0; idx < 10; idx++) {
         messages[idx] = {
             value: schemaRegistry.serialize({
-                // use 0 as parameter to create random body words from 5 to 10
-                // or create a random number here
-                data: Array.from(generator.exportLogsServiceRequest(5)),
+                data: Array.from(generator.exportLogsServiceRequest({
+                    // "attributes": logAttributes, // optionally create log specific attribute map
+                    "data": {
+                        "body": randomItem(logBodies),
+                        "severity": randomIntBetween(0, 24) // severity numbers from 0 to 24
+                    },
+                })),
                 schemaType: SCHEMA_TYPE_BYTES,
             })
         }

@@ -14,24 +14,9 @@ func (g *Generator) resource() *resourcepb.Resource {
 
 	if g.staticResourceAttributes != nil {
 		attributes = g.staticResourceAttributes
-	} else {
-		attributes = g.randomResourceAttributes()
 	}
 
 	return &resourcepb.Resource{
 		Attributes: attributes,
-	}
-}
-
-func (g *Generator) randomResourceAttributes() []*commonpb.KeyValue {
-	return []*commonpb.KeyValue{
-		{
-			Key: "host",
-			Value: &commonpb.AnyValue{
-				Value: &commonpb.AnyValue_StringValue{
-					StringValue: g.faker.Word() + ".example.com",
-				},
-			},
-		},
 	}
 }

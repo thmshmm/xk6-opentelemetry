@@ -7,10 +7,10 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func (g *Generator) ExportLogsServiceRequest(bodyWordCount int) []byte {
+func (g *Generator) ExportLogsServiceRequest(config LogConfig) []byte {
 	request := collogspb.ExportLogsServiceRequest{
 		ResourceLogs: []*logspb.ResourceLogs{
-			g.resourceLogs(bodyWordCount),
+			g.resourceLogs(config),
 		},
 	}
 

@@ -3,7 +3,6 @@ module github.com/thmshmm/xk6-opentelemetry
 go 1.20
 
 require (
-	github.com/brianvoe/gofakeit/v6 v6.20.1
 	github.com/sirupsen/logrus v1.9.0
 	go.k6.io/k6 v0.43.1
 	go.opentelemetry.io/proto/otlp v0.19.0
