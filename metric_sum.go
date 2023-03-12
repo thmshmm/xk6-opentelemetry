@@ -3,7 +3,6 @@ package generator
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 	"time"
 
 	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
@@ -30,17 +29,6 @@ func parseSumData(rawData map[string]interface{}) (*SumData, error) {
 	}
 
 	return &data, nil
-}
-
-func getAggregationTemporality(temporality string) metricspb.AggregationTemporality {
-	switch strings.ToLower(temporality) {
-	case "delta":
-		return metricspb.AggregationTemporality_AGGREGATION_TEMPORALITY_DELTA
-	case "cumulative":
-		return metricspb.AggregationTemporality_AGGREGATION_TEMPORALITY_CUMULATIVE
-	}
-
-	return metricspb.AggregationTemporality_AGGREGATION_TEMPORALITY_UNSPECIFIED
 }
 
 func sum(attrs []*commonpb.KeyValue, data *SumData) *metricspb.Metric_Sum {
