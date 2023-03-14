@@ -9,6 +9,11 @@ receivers:
       - broker:29092
     group_id: collector-metrics
     topic: otel_metrics
+  kafka/traces:
+    brokers:
+      - broker:29092
+    group_id: collector-traces
+    topic: otel_traces
 
 exporters:
   logging:
@@ -33,6 +38,14 @@ service:
         - batch
       exporters:
         - logging
+    traces:
+      receivers:
+        - kafka/traces
+      processors:
+        - batch
+      exporters:
+        - logging
+
   telemetry:
     logs:
       level: "info"

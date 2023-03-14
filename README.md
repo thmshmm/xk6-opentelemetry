@@ -6,10 +6,11 @@ Check the [scripts](./scripts/) directory for examples.
 
 ## Features
 
-- Generate ExportLogsServiceRequest
-- Generate ExportMetricsServiceRequest
-    - Types: gauge, sum, histogram
-- Set static resource attributes
+- Generate
+    - ExportLogsServiceRequest
+    - ExportMetricsServiceRequest (Types: gauge, sum, histogram)
+    - ExportTraceServiceRequest
+- Set resource attributes
 
 ## Development
 
@@ -43,6 +44,7 @@ docker compose -p xk6-opentelemetry down
 - **[test-logs.js](./scripts/test-logs.js)** - Create random log signals.
 - **[test-metrics.js](./scripts/test-metrics.js)** - Create random gauge/sum metric signals.
 - **[test-metrics-histogram.js](./scripts/test-metrics-histogram.js)** - Create random histogram metric signals.
+- **[test-traces.js](./scripts/test-traces.js)** - Create random trace signals.
 
 Execute:
 ```
