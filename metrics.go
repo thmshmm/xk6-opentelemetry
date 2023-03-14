@@ -9,11 +9,11 @@ import (
 )
 
 type MetricConfig struct {
-	Type       string                 `json:"type"`
-	Name       string                 `json:"name"`
-	Unit       string                 `json:"unit"`
-	Attributes map[string]interface{} `json:"attributes"`
-	Data       map[string]interface{} `json:"data"`
+	Type       string                 `js:"type"`
+	Name       string                 `js:"name"`
+	Unit       string                 `js:"unit"`
+	Attributes map[string]interface{} `js:"attributes"`
+	Data       map[string]interface{} `js:"data"`
 }
 
 func ResourceMetrics(resourceAttrs []*commonpb.KeyValue, config MetricConfig) *metricspb.ResourceMetrics {

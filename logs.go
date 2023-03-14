@@ -8,13 +8,13 @@ import (
 )
 
 type LogConfig struct {
-	Attributes map[string]interface{} `json:"attributes"`
-	Data       LogData                `json:"data"`
+	Attributes map[string]interface{} `js:"attributes"`
+	Data       LogData                `js:"data"`
 }
 
 type LogData struct {
-	Body     string `json:"body"`
-	Severity int32  `json:"severity"`
+	Body     string `js:"body"`
+	Severity int32  `js:"severity"`
 }
 
 func ResourceLogs(resourceAttrs []*commonpb.KeyValue, config LogConfig) *logspb.ResourceLogs {
