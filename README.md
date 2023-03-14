@@ -22,6 +22,11 @@ git clone git@github.com:thmshmm/xk6-opentelemetry.git && cd xk6-opentelemetry
 xk6 build --with xk6-opentelemetry=. --with github.com/mostafa/xk6-kafka
 ```
 
+or use [Task](https://taskfile.dev/):
+```
+task build-k6
+```
+
 ## Testing
 
 ### Local environment
@@ -30,13 +35,12 @@ Start a local test environment including Kafka (Redpanda) and an instance of the
 
 Start:
 ```
-cd testing
-docker compose -p xk6-opentelemetry up -d
+task testing-up
 ```
 
 Stop:
 ```
-docker compose -p xk6-opentelemetry down
+task testing-down
 ```
 
 ## Scripts
@@ -49,4 +53,9 @@ docker compose -p xk6-opentelemetry down
 Execute:
 ```
 ./k6 run scripts/<SCRIPT>.js
+```
+
+Run all scripts:
+```
+task run-scripts
 ```

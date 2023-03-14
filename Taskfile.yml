@@ -1,0 +1,27 @@
+version: '3'
+
+tasks:
+  build-k6:
+    cmds:
+      - xk6 build --with xk6-opentelemetry=. --with github.com/mostafa/xk6-kafka
+
+  lint:
+    cmds:
+      - golangci-lint run
+
+  testing-up:
+    dir: ./testing
+    cmds:
+      - docker compose -p xk6-opentelemetry up -d
+
+  testing-down:
+    dir: ./testing
+    cmds:
+      - docker compose -p xk6-opentelemetry down
+
+  run-scripts:
+    cmds:
+      - ./k6 run scripts/test-logs.js
+      - ./k6 run scripts/test-metrics.js
+      - ./k6 run scripts/test-metrics-histogram.js
+      - ./k6 run scripts/test-traces.js
