@@ -19,9 +19,9 @@ tasks:
     cmds:
       - docker compose -p xk6-opentelemetry down
 
-  run-scripts:
+  run-examples:
     cmds:
-      - ./k6 run scripts/test-logs.js
-      - ./k6 run scripts/test-metrics.js
-      - ./k6 run scripts/test-metrics-histogram.js
-      - ./k6 run scripts/test-traces.js
+      - ./k6 run examples/test-logs.js
+      - ./k6 run examples/test-metrics.js
+      - ./k6 run examples/test-metrics-histogram.js
+      - ./k6 run examples/test-traces.js

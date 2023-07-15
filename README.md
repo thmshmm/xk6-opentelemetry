@@ -2,7 +2,7 @@
 
 The xk6-opentelemetry project is a [k6 extension](https://k6.io/docs/extensions/guides/what-are-k6-extensions/) that enables k6 users to generate random [OpenTelemetry signals](https://opentelemetry.io/docs/reference/specification/glossary/#signals) (metrics, logs, traces) for testing purposes.
 
-Check the [scripts](./scripts/) directory for examples.
+Check the [examples](./examples/) directory which contains some scripts to get started.
 
 ## Features
 
@@ -43,19 +43,19 @@ Stop:
 task testing-down
 ```
 
-## Scripts
+## Examples
 
-- **[test-logs.js](./scripts/test-logs.js)** - Create random log signals.
-- **[test-metrics.js](./scripts/test-metrics.js)** - Create random gauge/sum metric signals.
-- **[test-metrics-histogram.js](./scripts/test-metrics-histogram.js)** - Create random histogram metric signals.
-- **[test-traces.js](./scripts/test-traces.js)** - Create random trace signals.
+- **[test-logs.js](./examples/test-logs.js)** - Create random log signals.
+- **[test-metrics.js](./examples/test-metrics.js)** - Create random gauge/sum metric signals.
+- **[test-metrics-histogram.js](./examples/test-metrics-histogram.js)** - Create random histogram metric signals.
+- **[test-traces.js](./examples/test-traces.js)** - Create random trace signals.
 
 Execute:
 ```
-./k6 run scripts/<SCRIPT>.js
+./k6 run examples/<SCRIPT>.js
 ```
 
-Run all scripts:
+Run all examples:
 ```
-task run-scripts
+task run-examples
 ```
