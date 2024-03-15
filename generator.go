@@ -1,10 +1,10 @@
 package generator
 
 import (
+	"log/slog"
 	"math/rand"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
 	"google.golang.org/protobuf/proto"
 )
@@ -32,7 +32,7 @@ func (g *Generator) ExportLogsServiceRequest(config LogConfig) []byte {
 
 	data, err := proto.Marshal(request)
 	if err != nil {
-		logrus.Errorf("Failed to marshal ExportLogsServiceRequest: %v", err)
+		slog.Error("Failed to marshal ExportLogsServiceRequest", "error", err)
 
 		return nil
 	}
@@ -45,7 +45,7 @@ func (g *Generator) ExportMetricsServiceRequest(config MetricConfig) []byte {
 
 	data, err := proto.Marshal(request)
 	if err != nil {
-		logrus.Errorf("Failed to marshal ExportMetricsServiceRequest: %v", err)
+		slog.Error("Failed to marshal ExportMetricsServiceRequest", "error", err)
 
 		return nil
 	}
@@ -58,7 +58,7 @@ func (g *Generator) ExportTraceServiceRequest(config TraceConfig) []byte {
 
 	data, err := proto.Marshal(request)
 	if err != nil {
-		logrus.Errorf("Failed to marshal ExportTraceServiceRequest: %v", err)
+		slog.Error("Failed to marshal ExportTraceServiceRequest", "error", err)
 
 		return nil
 	}

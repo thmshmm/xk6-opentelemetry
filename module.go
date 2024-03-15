@@ -26,7 +26,7 @@ func New() *RootModule {
 }
 
 // NewModuleInstance implements the modules.Module interface returning a new instance for each VU.
-func (*RootModule) NewModuleInstance(vu modules.VU) modules.Instance {
+func (*RootModule) NewModuleInstance(_ modules.VU) modules.Instance {
 	return &ModuleInstance{
 		generator: NewGenerator(),
 	}

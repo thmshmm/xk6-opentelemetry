@@ -1,9 +1,9 @@
 package generator
 
 import (
+	"log/slog"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
 	metricspb "go.opentelemetry.io/proto/otlp/metrics/v1"
 )
@@ -28,7 +28,7 @@ func ResourceMetrics(resourceAttrs []*commonpb.KeyValue, config MetricConfig) *m
 	case "gauge":
 		data, err := parseGaugeData(config.Data)
 		if err != nil {
-			logrus.Error(err)
+			slog.Error("Failed to parse gauge data", "error", err)
 
 			return nil
 		}
@@ -37,7 +37,7 @@ func ResourceMetrics(resourceAttrs []*commonpb.KeyValue, config MetricConfig) *m
 	case "sum":
 		data, err := parseSumData(config.Data)
 		if err != nil {
-			logrus.Error(err)
+			slog.Error("Failed to parse sum data", "error", err)
 
 			return nil
 		}
@@ -46,14 +46,14 @@ func ResourceMetrics(resourceAttrs []*commonpb.KeyValue, config MetricConfig) *m
 	case "histogram":
 		data, err := parseHistogramData(config.Data)
 		if err != nil {
-			logrus.Error(err)
+			slog.Error("Failed to parse histogram data", "error", err)
 
 			return nil
 		}
 
 		metric.Data = histogram(attrs, data)
 	default:
-		logrus.Errorf("Unimplemented metric type %q, use one of [gauge, sum]", config.Type)
+		slog.Error("Unimplemented metric type %q, use one of [gauge, sum]", "type", config.Type)
 
 		return nil
 	}

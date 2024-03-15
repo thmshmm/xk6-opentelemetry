@@ -2,9 +2,9 @@ package generator
 
 import (
 	"encoding/hex"
+	"log/slog"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
 	tracepb "go.opentelemetry.io/proto/otlp/trace/v1"
 )
@@ -48,17 +48,17 @@ func spans(data []SpanData) []*tracepb.Span {
 func span(data SpanData) *tracepb.Span {
 	traceID, err := hex.DecodeString(data.TraceID)
 	if err != nil {
-		logrus.Error("invalid trace id")
+		slog.Error("invalid trace id")
 	}
 
 	spanID, err := hex.DecodeString(data.SpanID)
 	if err != nil {
-		logrus.Error("invalid span id")
+		slog.Error("invalid span id")
 	}
 
 	parentSpanID, err := hex.DecodeString(data.ParentSpanID)
 	if err != nil {
-		logrus.Error("invalid parent span id")
+		slog.Error("invalid parent span id")
 	}
 
 	return &tracepb.Span{
