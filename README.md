@@ -12,7 +12,23 @@ Check the [examples](./examples/) directory which contains some scripts to get s
     - ExportTraceServiceRequest
 - Set resource attributes
 
-## Development
+## Usage
+
+### Docker
+
+The easiest way to get started is to build the provided Docker image and run k6 scripts inside the container.
+
+Build the image:
+```
+docker build -t xk6-opentelemetry .
+```
+
+Run a local k6 script:
+```
+docker run --rm -i xk6-opentelemetry run - <my-script.js
+```
+
+### Local build
 
 As the testing environment and scripts rely on sending messages to Kafka, the extension [xk6-kafka](https://github.com/mostafa/xk6-kafka) needs to be integrated as well when creating the k6 binary.
 

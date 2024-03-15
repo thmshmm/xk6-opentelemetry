@@ -5,6 +5,10 @@ tasks:
     cmds:
       - xk6 build --with xk6-opentelemetry=. --with github.com/mostafa/xk6-kafka
 
+  build-docker:
+    cmds:
+      - docker build -t xk6-opentelemetry .
+
   lint:
     cmds:
       - golangci-lint run
