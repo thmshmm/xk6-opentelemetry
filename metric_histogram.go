@@ -27,7 +27,6 @@ func parseHistogramData(rawData map[string]interface{}) (*HistogramData, error) 
 
 	var data HistogramData
 	err = json.Unmarshal(dataBytes, &data)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse JSON histogram data: %w", err)
 	}

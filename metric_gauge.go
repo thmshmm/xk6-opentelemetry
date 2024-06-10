@@ -21,7 +21,6 @@ func parseGaugeData(rawData map[string]interface{}) (*GaugeData, error) {
 
 	var data GaugeData
 	err = json.Unmarshal(dataBytes, &data)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse JSON gauge data: %w", err)
 	}
