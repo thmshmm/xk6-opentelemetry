@@ -23,7 +23,6 @@ func parseSumData(rawData map[string]interface{}) (*SumData, error) {
 
 	var data SumData
 	err = json.Unmarshal(dataBytes, &data)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse JSON sum data: %w", err)
 	}
